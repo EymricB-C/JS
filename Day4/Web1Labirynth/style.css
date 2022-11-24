@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;list-style-type:none}
 
 button:hover{
@@ -32,4 +33,40 @@ h2{
     font-weight: 700;
     position: absolute;
     left: 0;
+=======
+*{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;list-style-type:none}
+
+button:hover{
+    background-color: #fff;
+}
+
+button{
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+}
+
+td{
+    display: inline-flex;
+}
+tr{
+    display: flex;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: wheat;
+}
+
+h2{
+    padding: 20px;
+    font-size: 200%;
+    font-family: sans-serif;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+>>>>>>> b17d61368e40db94ebc67046782511296b34ac4e
 }
