@@ -1,23 +1,31 @@
-function Personnage(nom, type, force, vitalité) {
+function Personnage(nom, type, force, PV) {
     this.nom = nom
     this.type = type
     this.force = force
-    this.vitalité = vitalité
+    this.PV = PV
 
-    this.attaque = function () {
-        console.log(nom + " fait " + force + " dégats")
+    
+
+    this.attaque = function (adversaire) {
+        console.log(nom + " fait " + force + " dégats sur " + adversaire.nom);
+        adversaire.PV = adversaire.PV - force;
     }
 
     this.sante = function () {
-        console.log(nom +" à " + vitalité + " PV")
+        if(PV > 0){
+            console.log(nom +" à " + PV + " PV");
+        }else{
+            console.log("personnage mort (comme ma maman)");
+        }
+        
     }
 }
 
-const paladin1 = new Personnage("darion", "paladin", 200, 400)
-const sorcerer1 = new Personnage("megan", "sorcerer", 100, 200)
+let paladin1 = new Personnage("darion", "paladin", 100, 400)
+let sorcerer1 = new Personnage("megan", "sorcerer", 100, 200)
 
-paladin1.attaque();
+paladin1.attaque(sorcerer1);
 paladin1.sante();
 
-sorcerer1.attaque();
+sorcerer1.attaque(paladin1);
 sorcerer1.sante();
