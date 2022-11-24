@@ -1,30 +1,48 @@
-function Personnage(nom, type, force, PV) {
-    this.nom = nom
-    this.type = type
-    this.force = force
-    this.PV = PV
+function Personnage(name, type, force, PV) {
+    this.name = name;
+    this.type = type;
+    let strength = force;
+    let health = PV;
+
+    this.getStrength = function (){
+        return strength;
+    };
+
+    this.getHealth = function (){
+        return health;
+    };
+
+
+    this.setStrength = function (force){
+        strength = force;
+    };
+
+    this.setHealth = function (PV){
+        health = PV;
+    };
+
+
 
     this.attaque = function (adversaire) {
-        if(this.PV>0) {
-            console.log(nom + " fait " + force + " dégats sur " + adversaire.nom);
-            adversaire.PV = adversaire.PV - force;
+        if(this.getHealth()>0) {
+            console.log(name + " fait " + strength + " dégats sur " + adversaire.name);
+            adversaire.setHealth(adversaire.getHealth() - strength);
             adversaire.sante();
-        }
-    }
+        };
+    };
 
     this.sante = function () {
-        if(this.PV > 0){
-            console.log(nom +" à " + this.PV + " PV");
+        if(this.getHealth() > 0){
+            console.log(name +" à " + this.getHealth() + " PV");
         }else{
-            console.log(nom + " est mort(e)");
-        }
-        
-    }
-}
+            console.log(name + " est mort(e)");
+        };
+    };
+};
 
-let paladin1 = new Personnage("darion", "paladin", 200, 400)
-let sorcerer1 = new Personnage("megan", "sorcerer", 100, 200)
+let paladin1 = new Personnage("darion", "paladin", 3000, 14000);
+let tank1 = new Personnage("megan", "tank", 500, 50000);
 
-paladin1.attaque(sorcerer1);
+paladin1.attaque(tank1);
 
-sorcerer1.attaque(paladin1);
+tank1.attaque(paladin1);
