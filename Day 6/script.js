@@ -1,1 +1,0 @@
-input = prompt("aimez vous bien le site ?")
