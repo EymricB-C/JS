@@ -83,14 +83,20 @@ function newDatabase(){
     };
 
     return new Promise((resolve, reject) => {
-        openRequest.onerror = function () {
-            console.error("impossible d\'accéder à IndexedDB");
-        }
-
         openRequest.onsuccess = function () {
             console.info("la connexion avec la base de donnée est effective")
+            resolve(openRequest.result);
+        }
+
+        openRequest.onerror = function () {
+            console.error("impossible d\'accéder à IndexedDB");
+            reject(openRequest.error)
         }
     })
 };
 
-const database = newDatabase();
+const database = newDatabase().then((database) => {
+    console.log(database);
+}).catch((error) => {
+    console.error(error)
+});
