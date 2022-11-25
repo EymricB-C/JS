@@ -95,7 +95,7 @@ function newDatabase(){
     })
 };
 
-const database = newDatabase().then((database) => {
+newDatabase().then((database) => {
     console.log(database);
 }).catch((error) => {
     console.error(error)
