@@ -1,12 +1,3 @@
-/**
- * Exercice 2.7
- * Créer une nouvelle page Web avec une zone permettant d"effectuer des calculs (SUM, SUB, MULT, DIV, MODULO)
- * Faire apparaitre l"historique des calculs dans une zone et faire apparaitre le résultat des calculs dans une autre zone de la page WEB
-*/
-
-// La page web est créée dans index.html du même dossier
-
-// On récupère les références des champs qui ont pour x et y
 const X = document.getElementById('x');
 const Y = document.getElementById('y');
 
@@ -79,19 +70,27 @@ function addToHistory(x, y, result, operator) {
     HISTORY.insertAdjacentElement("afterbegin", row)
 }
 
-let db = "";
-let openRequest = indexedDB.open("db", 1);
-openRequest.onupgradeneeded = function () {
-    db = openRequest.result;
-    if (!db.objectStoreNames.contains("users")) {
-        db.createObjectStore("users", { keyPath:"id" });
-    }
+function newDatabase(){
+    let db = "";
+    let openRequest = indexedDB.open("db", 1);
+
+
+    openRequest.onupgradeneeded = function () {
+        db = openRequest.result;
+        if (!db.objectStoreNames.contains("results")) {
+            db.createObjectStore("results", { keyPath:"id" });
+        }
+    };
+
+    return new Promise((resolve, reject) => {
+        openRequest.onerror = function () {
+            console.error("impossible d\'accéder à IndexedDB");
+        }
+
+        openRequest.onsuccess = function () {
+            console.info("la connexion avec la base de donnée est effective")
+        }
+    })
 };
 
-openRequest.onerror = function () {
-    console.error("impossible d\'accéder à IndexedDB");
-}
-
-openRequest.onsuccess = function () {
-
-}
+const database = newDatabase();
