@@ -93,31 +93,5 @@ openRequest.onerror = function () {
 }
 
 openRequest.onsuccess = function () {
-    db = openRequest.result;
-    // 1
-    let transaction = db.transaction("users", "readwrite");
-    transaction.oncomplete = function () { alert("Transaction terminée"); };
-    // 2
-    let users = transaction.objectStore("users");
-    // 3
-    let user = {
-    id: 1,
-    prenom: "jerome",
-    mail: "contact@jeromeb.org",
-    inscription: new Date()
-    };
-    let ajout = users.put(user);
-    ajout.onsuccess = function () {
-    alert("Utilisateur ajouté avec la clef " + ajout.result);
-    };
-    ajout.onerror = function () {
-    alert("Erreur : " + ajout.error);
-    };
-    let lire = users.get(1);
-    lire.onsuccess = function () {
-    alert("Nom de l\"utilisateur 1 : " + lire.result.prenom);
-    };
-    lire.onerror = function () {
-    alert("Erreur : " + lire.error);
-    };
+
 }
