@@ -1,7 +1,7 @@
 /**
  * Exercice 2.7
- * Créer une nouvelle page Web avec une zone permettant d’effectuer des calculs (SUM, SUB, MULT, DIV, MODULO)
- * Faire apparaitre l’historique des calculs dans une zone et faire apparaitre le résultat des calculs dans une autre zone de la page WEB
+ * Créer une nouvelle page Web avec une zone permettant d"effectuer des calculs (SUM, SUB, MULT, DIV, MODULO)
+ * Faire apparaitre l"historique des calculs dans une zone et faire apparaitre le résultat des calculs dans une autre zone de la page WEB
 */
 
 // La page web est créée dans index.html du même dossier
@@ -56,11 +56,6 @@ BUTTON_MODULO.addEventListener('click', () => {
     RESULT.innerText = res;
 })
 
-// La fonction "calculation" suivante prend 3 arguments :
-//  - "x", un des deux nombres du calcul
-//  - "y", un des deux nombres du calcul
-//  - "operator", l'opérateur que l'on veut utiliser pour le calcul
-// Grâce à la structure de contrôle "switch", cette fonction va simplement retourner le bon calcul suivant l'operateur entré en argument
 function calcuation(x, y, operator) {
     switch(operator) {
         case 'SUM':
@@ -76,11 +71,53 @@ function calcuation(x, y, operator) {
     }
 }
 
-// Cette fonction "addToHistory" prend 4 arguments :
-//  - "x" et "y", les valeurs du calcul
-//  - "result", le resultat du calcul
-//  - "operator", l'opérateur appliqué ("+", "-", "*", "/" ou "%")
-// On va réassigner ce qu'il y a d'écrit dans l'historique en concaténant le dernier calcul et les précédents de l'historique
 function addToHistory(x, y, result, operator) {
-    HISTORY.innerHTML = `${x} ${operator} ${y} = ${result} | ` + HISTORY.innerHTML;
+    const row = document.createElement('tr');
+    const col = document.createElement('td');
+    col.innerText = `${x} ${operator} ${y} = ${result}`;
+    row.appendChild(col);
+    HISTORY.insertAdjacentElement("afterbegin", row)
+}
+
+let db = "";
+let openRequest = indexedDB.open("db", 1);
+openRequest.onupgradeneeded = function () {
+    db = openRequest.result;
+    if (!db.objectStoreNames.contains("users")) {
+        db.createObjectStore("users", { keyPath:"id" });
+    }
+};
+
+openRequest.onerror = function () {
+    console.error("impossible d\'accéder à IndexedDB");
+}
+
+openRequest.onsuccess = function () {
+    db = openRequest.result;
+    // 1
+    let transaction = db.transaction("users", "readwrite");
+    transaction.oncomplete = function () { alert("Transaction terminée"); };
+    // 2
+    let users = transaction.objectStore("users");
+    // 3
+    let user = {
+    id: 1,
+    prenom: "jerome",
+    mail: "contact@jeromeb.org",
+    inscription: new Date()
+    };
+    let ajout = users.put(user);
+    ajout.onsuccess = function () {
+    alert("Utilisateur ajouté avec la clef " + ajout.result);
+    };
+    ajout.onerror = function () {
+    alert("Erreur : " + ajout.error);
+    };
+    let lire = users.get(1);
+    lire.onsuccess = function () {
+    alert("Nom de l\"utilisateur 1 : " + lire.result.prenom);
+    };
+    lire.onerror = function () {
+    alert("Erreur : " + lire.error);
+    };
 }
